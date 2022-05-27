@@ -11,14 +11,6 @@ import io.micronaut.http.annotation.*
 class RailRoadsController (
     private val operations: OperationsService
 ) {
-    
-    @Get
-    @Produces(MediaType.APPLICATION_JSON)
-    fun hello(): HttpResponse<Any> {
-        val httpResponse: HttpResponse<Any>
-        httpResponse = HttpResponse.status<Any>(HttpStatus.OK).body<Any>("Hello world")
-        return httpResponse
-    }
 
     @Post
     @Produces(MediaType.APPLICATION_JSON)

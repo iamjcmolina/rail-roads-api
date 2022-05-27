@@ -4,10 +4,6 @@ micronaut:
   server:
     cors:
       enabled: true
-      configurations:
-        web:
-          allowedOrigins:
-            - http://localhost:3000
 netty:
   default:
     allocator:
