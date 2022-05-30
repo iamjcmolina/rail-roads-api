@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: railRoadOperations
+    name: railRoadApi
   server:
     cors:
       enabled: true
