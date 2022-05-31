@@ -8,3 +8,8 @@ netty:
   default:
     allocator:
       max-order: 3
+dynamodb:
+  endpoint: http://localhost:9001
+  car-table-name: rail-roads-car
+  destination-table-name: rail-roads-destination
+  receiver-table-name: rail-roads-receiver

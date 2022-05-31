@@ -1,7 +1,7 @@
-package com.il.controllers
+package com.il.controller
 
-import com.il.models.InputCars
-import com.il.services.OperationsService
+import com.il.model.InputCars
+import com.il.service.OperationsService
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.HttpStatus
 import io.micronaut.http.MediaType

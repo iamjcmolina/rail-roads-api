@@ -1,7 +1,7 @@
-package com.il.services
+package com.il.service
 
-import com.il.models.InputCars
-import com.il.models.OutputCar
+import com.il.model.InputCars
+import com.il.model.OutputCar
 import jakarta.inject.Singleton
 
 @Singleton
