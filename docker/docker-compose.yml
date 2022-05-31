@@ -1,0 +1,19 @@
+version: "3.8"
+
+volumes:
+  dynamodb_data:
+services:
+  dynamodb-local:
+    container_name: dynamodb-local
+    image: "amazon/dynamodb-local:latest"
+    command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    ports:
+      - 9001:8000
+    networks:
+      - cwng-net
+networks:
+  cwng-net:
+    attachable: true
