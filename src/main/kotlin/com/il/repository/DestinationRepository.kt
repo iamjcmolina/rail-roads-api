@@ -9,7 +9,6 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
 import software.amazon.awssdk.enhanced.dynamodb.Key
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema
 import software.amazon.awssdk.enhanced.dynamodb.model.Page
-import software.amazon.awssdk.enhanced.dynamodb.model.QueryEnhancedRequest
 
 @Singleton
 class DestinationRepository(
@@ -28,6 +27,16 @@ class DestinationRepository(
     fun save(destination: Destination) : Mono<Destination> {
         destinationTable.putItem(destination).get()
         return find(destination.id.toString())
+    }
+    
+    fun update(id: String, destination: Destination) : Mono<Destination> {
+        val key = Key.builder().partitionValue(id).build()
+        var destination = destinationTable.getItem(key).get()
+        
+        if (destination != null) {
+            destinationTable.updateItem(destination).get()
+        }
+        return find(id)
     }
 
     fun delete(id: String): Mono<Destination> {

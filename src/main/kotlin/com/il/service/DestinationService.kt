@@ -19,6 +19,10 @@ class DestinationService(
         return destinationRepository.save(destination)
     }
     
+    fun update(id: String, destination: Destination): Mono<Destination> {
+        return destinationRepository.update(id, destination)
+    }
+    
     fun delete(id: String): Mono<Destination> {
         return destinationRepository.delete(id)
     }
