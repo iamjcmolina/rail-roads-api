@@ -85,8 +85,8 @@ create_car_table() {
   if [[ $? == 254 ]]; then
       echo "creating table definition: ${CAR_TABLE}"
       aws dynamodb create-table --endpoint-url $DYNAMODB_ENDPOINT --table-name $CAR_TABLE --no-cli-pager \
-          --attribute-definitions  AttributeName=nameOfCar,AttributeType=S AttributeName=destination,AttributeType=S AttributeName=receiver,AttributeType=S \
-          --key-schema AttributeName=nameOfCar,KeyType=HASH AttributeName=destination,KeyType=HASH AttributeName=receiver,KeyType=HASH \
+          --attribute-definitions  AttributeName=nameOfCar,AttributeType=S \
+          --key-schema AttributeName=nameOfCar,KeyType=HASH \
           --provisioned-throughput ReadCapacityUnits=10,WriteCapacityUnits=5
   fi
   aws dynamodb describe-table --endpoint-url $DYNAMODB_ENDPOINT --table $CAR_TABLE --output yaml --no-cli-pager
