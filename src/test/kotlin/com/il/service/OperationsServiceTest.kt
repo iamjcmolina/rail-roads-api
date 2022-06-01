@@ -19,13 +19,13 @@ class OperationsServiceTest {
         val destinations = listOf("Houston", "Chicago", "LA")
         val receivers = listOf("UPS","FedEx","Old Dominion")
         val cars = listOf(
-            Car(UUID.randomUUID(), "Engine"),
-            Car(UUID.randomUUID(), "Box Car 1", "Houston", "FedEx"),
-            Car(UUID.randomUUID(),"Box Car 2", "Chicago", "FedEx"),
-            Car(UUID.randomUUID(),"Box Car 3", "Houston", "UPS"),
-            Car(UUID.randomUUID(),"Box Car 4", "LA", "Old Dominion"),
-            Car(UUID.randomUUID(),"Box Car 5", "LA", "FedEx"),
-            Car(UUID.randomUUID(),"Box Car 6", "Houston", "Old Dominion")
+            Car("Engine"),
+            Car("Box Car 1", "Houston", "FedEx"),
+            Car("Box Car 2", "Chicago", "FedEx"),
+            Car("Box Car 3", "Houston", "UPS"),
+            Car("Box Car 4", "LA", "Old Dominion"),
+            Car("Box Car 5", "LA", "FedEx"),
+            Car("Box Car 6", "Houston", "Old Dominion")
         )
         val inputCars = InputCars(destinations, receivers, cars)
         

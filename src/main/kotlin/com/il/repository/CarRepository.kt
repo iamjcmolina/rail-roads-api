@@ -17,14 +17,14 @@ class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsy
     private val tableSchema = TableSchema.fromBean(Car::class.java)
     private val carTable = dynamoDbEnhancedAsyncClient.table(carTableName, tableSchema)
     
-    fun find(nameOfCar: String): Mono<Car> {
-        val key = Key.builder().partitionValue(nameOfCar).build()
+    fun find(id: String): Mono<Car> {
+        val key = Key.builder().partitionValue(id).build()
         return carTable.getItem(key).toMono()
     }
     
     fun save(car: Car) : Mono<Car> {
         carTable.putItem(car).get()
-        return find(car.nameOfCar)
+        return find(car.id.toString())
     }
     
     fun update(id: String, car: Car) : Mono<Car> {
@@ -32,9 +32,11 @@ class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsy
         var existingCar = carTable.getItem(key).get()
         
         if (existingCar != null) {
-            carTable.updateItem(car).get()
+            var updatedCar : Car = carTable.updateItem(car).get()
+            updatedCar.id = existingCar.id
+            return Mono.just(updatedCar)
         }
-        return find(id)
+        return Mono.empty()
     }
 
     fun delete(nameOfCar: String): Mono<Car> {
