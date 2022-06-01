@@ -8,10 +8,12 @@ import jakarta.inject.Singleton
 class OperationsService {
     
     fun categorizeByDestinationAndReceiver(inputCars: InputCars): List<OutputCar>? {
+        val destinations = inputCars.cars.map { car -> car.destination }.toSet()
+        val receivers = inputCars.cars.map { car -> car.receiver }.toSet()
         val outputCars = inputCars
             .cars?.filterNot { it.nameOfCar.equals("Engine") }
-            ?.map { OutputCar(inputCars.destinations.indexOf(it.destination) + 1,it.nameOfCar, it.destination, it.receiver) }
-            ?.sortedWith(compareBy<OutputCar>({ inputCars.destinations.indexOf(it.destination) }).thenBy { inputCars.receivers.indexOf(it.receiver) })
+            ?.map { OutputCar(destinations.indexOf(it.destination) + 1, it.nameOfCar, it.destination, it.receiver) }
+            ?.sortedWith(compareBy<OutputCar>({ destinations.indexOf(it.destination) }).thenBy { receivers.indexOf(it.receiver) })
         
         return outputCars;
     }
