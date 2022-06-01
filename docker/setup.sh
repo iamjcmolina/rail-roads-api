@@ -10,6 +10,7 @@ DESTINATION_TABLE="rail-roads-destination"
 RECEIVER_TABLE="rail-roads-receiver"
 
 create_destination_table() {
+  aws dynamodb delete-table --endpoint-url  $DYNAMODB_ENDPOINT --table-name $DESTINATION_TABLE --output yaml --no-cli-pager
   echo "checking if table exists: ${DESTINATION_TABLE}"
   aws dynamodb describe-table --endpoint-url $DYNAMODB_ENDPOINT --table-name $DESTINATION_TABLE --output json --no-cli-pager
   if [[ $? == 254 ]]; then
@@ -47,6 +48,7 @@ populate_destination_table() {
 }
 
 create_receiver_table() {
+  aws dynamodb delete-table --endpoint-url  $DYNAMODB_ENDPOINT --table-name $RECEIVER_TABLE --output yaml --no-cli-pager
   echo "checking if table exists: ${RECEIVER_TABLE}"
   aws dynamodb describe-table --endpoint-url $DYNAMODB_ENDPOINT --table $RECEIVER_TABLE --output json --no-cli-pager
   if [[ $? == 254 ]]; then
@@ -85,6 +87,7 @@ populate_receiver_table() {
 }
 
 create_car_table() {
+  aws dynamodb delete-table --endpoint-url  $DYNAMODB_ENDPOINT --table-name $CAR_TABLE --output yaml --no-cli-pager
   echo "checking if table exists: ${CAR_TABLE}"
   aws dynamodb describe-table --endpoint-url $DYNAMODB_ENDPOINT --table $CAR_TABLE --output yaml --no-cli-pager
   if [[ $? == 254 ]]; then
