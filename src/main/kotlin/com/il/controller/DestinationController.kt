@@ -23,7 +23,7 @@ class DestinationController(
             .map { HttpResponse.created(it) }
     }
     
-    @Patch("/{id}")
+    @Put("/{id}")
     fun update(@PathVariable id: String, @Body destination: Destination): Mono<HttpResponse<Destination>> {
         return destinationService.update(id, destination)
             .map { HttpResponse.ok(it) }

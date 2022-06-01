@@ -30,11 +30,12 @@ class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsy
     fun update(id: String, car: Car) : Mono<Car> {
         val key = Key.builder().partitionValue(id).build()
         var existingCar = carTable.getItem(key).get()
+        existingCar.nameOfCar = car.nameOfCar?: existingCar.nameOfCar
+        existingCar.destination = car.destination?: existingCar.destination
+        existingCar.receiver = car.receiver?: existingCar.receiver
         
         if (existingCar != null) {
-            var updatedCar : Car = carTable.updateItem(car).get()
-            updatedCar.id = existingCar.id
-            return Mono.just(updatedCar)
+            return carTable.updateItem(existingCar).toMono()
         }
         return Mono.empty()
     }

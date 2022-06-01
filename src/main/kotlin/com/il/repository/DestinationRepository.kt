@@ -32,9 +32,10 @@ class DestinationRepository(
     fun update(id: String, destination: Destination) : Mono<Destination> {
         val key = Key.builder().partitionValue(id).build()
         var existingDestination = destinationTable.getItem(key).get()
+        existingDestination.destination = destination.destination?: existingDestination.destination
         
         if (existingDestination != null) {
-            destinationTable.updateItem(destination).get()
+            destinationTable.updateItem(existingDestination).get()
         }
         return find(id)
     }

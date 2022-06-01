@@ -6,12 +6,16 @@ import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbParti
 import java.util.*
 
 @DynamoDbBean
-class Destination {
+class Destination(
+    id: UUID?,
+    destination: String?
+) {
+    constructor() : this(null, "")
 
     @get: DynamoDbPartitionKey
     @get: DynamoDbAttribute(value = "id")
-    var id: UUID = UUID.randomUUID()
+    var id: UUID = id?: UUID.randomUUID()
     
     @get: DynamoDbAttribute(value = "destination")
-    lateinit var destination: String
+    var destination: String? = destination
 }
