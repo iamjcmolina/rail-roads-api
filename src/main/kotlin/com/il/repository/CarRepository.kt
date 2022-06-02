@@ -9,6 +9,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedAsyncClient
 import software.amazon.awssdk.enhanced.dynamodb.Key
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema
 import software.amazon.awssdk.enhanced.dynamodb.model.Page
+import java.util.*
 
 @Singleton
 class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsyncClient,
@@ -23,6 +24,7 @@ class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsy
     }
     
     fun save(car: Car) : Mono<Car> {
+        car.id = UUID.randomUUID()
         carTable.putItem(car).get()
         return find(car.id.toString())
     }
@@ -30,18 +32,16 @@ class CarRepository(private val dynamoDbEnhancedAsyncClient: DynamoDbEnhancedAsy
     fun update(id: String, car: Car) : Mono<Car> {
         val key = Key.builder().partitionValue(id).build()
         var existingCar = carTable.getItem(key).get()
-        existingCar.nameOfCar = car.nameOfCar?: existingCar.nameOfCar
-        existingCar.destination = car.destination?: existingCar.destination
-        existingCar.receiver = car.receiver?: existingCar.receiver
         
         if (existingCar != null) {
-            return carTable.updateItem(existingCar).toMono()
+            car.id = existingCar.id
+            return carTable.updateItem(car).toMono()
         }
         return Mono.empty()
     }
 
-    fun delete(nameOfCar: String): Mono<Car> {
-        val key = Key.builder().partitionValue(nameOfCar).build()
+    fun delete(id: String): Mono<Car> {
+        val key = Key.builder().partitionValue(id).build()
         return carTable.deleteItem(key).toMono()
     }
     

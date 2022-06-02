@@ -15,11 +15,11 @@ class OperationsServiceTest {
     lateinit var operationsService: OperationsService
     
     @Test
-    fun test() {
+    fun testOrderCarsByDestinationsAndReceivers() {
         val destinations = listOf("Houston", "Chicago", "LA")
         val receivers = listOf("UPS","FedEx","Old Dominion")
         val cars = listOf(
-            Car("Engine"),
+            Car("Engine", "", ""),
             Car("Box Car 1", "Houston", "FedEx"),
             Car("Box Car 2", "Chicago", "FedEx"),
             Car("Box Car 3", "Houston", "UPS"),
